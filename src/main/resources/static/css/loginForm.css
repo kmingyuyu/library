@@ -1,0 +1,119 @@
+@charset "UTF-8";
+
+*{
+	margin: 0;
+	padding: 0;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+body {
+	
+	margin: 0;
+    height: 100%;
+    background-color: #f5f6f7;
+    font-size: 14px;
+    color: #4d4d4d;
+}
+
+.loginForm {
+  position: absolute;
+  left: 50%;
+  top: 30%;
+  transform: translate(-50%, -50%);
+    width: 460px;
+    padding-bottom: 50px;
+    background-color: #f5f6f7;
+}
+
+.loginForm .logo {
+    float: none;
+    text-align: center;
+}
+
+form, fieldset, blockquote {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+legend, caption, hr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    text-indent: -9999px;
+    overflow: hidden;
+}
+
+.loginForm .inputFields {
+    margin: 50px 0 15px;
+    border-bottom: 1px solid #e4e4e5;
+}
+
+.loginForm .inputFields .inputId input {
+    width: 100%;
+    height: 49px;
+    border: 1px solid #dadada;
+    text-indent: 13px;
+    ime-mode: disabled;
+    text-transform: lowercase;
+    -webkit-ime-mode: disabled;
+    -moz-ime-mode: disabled;
+    -ms-ime-mode: disabled;
+    ime-mode: disabled;
+}
+
+.loginForm .inputFields .inputPw {
+    margin: 14px 0 22px;
+}
+
+.loginForm .inputFields .inputPw input {
+    width: 100%;
+    height: 49px;
+    border: 1px solid #dadada;
+    text-indent: 13px;
+}
+
+.loginForm .inputFields .saveId {
+    margin: 15px 0 37px;
+}
+
+.loginForm .inputFields .inputSubmit input {
+    width: 100%;
+    padding: 15px 0;
+    background: none;
+    border: none;
+    background-color: #1a4079;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.loginForm .loginMenu {
+    text-align: center;
+}
+
+.loginForm .loginMenu a:first-child {
+    margin-left: 0;
+}
+
+.loginForm .loginMenu a {
+    margin-left: 15px;
+    color: #838383;
+    font-size: 14px;
+}
+
+.loginForm .loginFooter .address {
+    color: #686868;
+    font-size: 12px;
+}
+
+.loginForm .loginFooter .address p {
+    margin-bottom: 3px;
+}
+
+.loginForm .loginFooter .address p {
+    margin-bottom: 3px;
+}

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">	
+
+<header th:fragment="header">
+	<!-- Start Top Nav -->
+	<nav
+		class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block"
+		 sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+		<div class="container text-light">
+			<div class="d-flex justify-content-start">
+				<div class="align-self-center collapse navbar-collapse flex-fill  
+				d-lg-flex justify-content-lg-between admin_box"
+				     >
+					<span class="me-3">[ 관리자 모드 ]</span>
+					<a href="/admin/book/new" class=" me-3">책 등록</a>
+					<a href="/admin/books" class="me-3">책 관리</a>
+				</div>
+			</div>
+		</div>
+	</nav>
+	<!-- Close Top Nav -->
+
+
+	<nav class="navbar navbar-expand-lg navbar-light header_nav_top">
+		<div
+			class="container d-flex justify-content-between align-items-center">
+
+			<a class="text-success logo align-self-center"
+				href="/"> <img alt="로고" src="/img/MOOK.png" width="100">
+			</a>
+
+
+			<button class="navbar-toggler border-0" type="button"
+				data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div
+				class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between"
+				id="templatemo_main_nav">
+				<div class="flex-fill"></div>
+				<div class="navbar_top align-self-center d-flex">
+					<div
+						class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
+						<div class="input-group">
+							<input type="text" class="form-control" id="inputMobileSearch"
+								placeholder="Search ...">
+							<div class="input-group-text">
+								<i class="fa fa-fw fa-search"></i>
+							</div>
+						</div>
+					</div>
+					<a class="me-3 position-relative text-decoration-none main_a_txt" 
+					href="/member/login" sec:authorize="isAnonymous()">
+						<span>로그인</span> 
+					</a>
+					 <a class=" position-relative text-decoration-none main_a_txt"
+						href="/member/new" sec:authorize="isAnonymous()"> 
+						<span>회원가입</span> 
+					</a>
+					 <a class="me-3 position-relative text-decoration-none main_a_txt"
+						href="/member/logout" sec:authorize="isAuthenticated()"> 
+						<span>로그아웃</span> 
+					</a>
+					 <a class=" position-relative text-decoration-none main_a_txt"
+						href="/member/mypage" sec:authorize="isAuthenticated()"> 
+						<span>마이 페이지</span> 
+					</a>
+				</div>
+			</div>
+
+		</div>
+	</nav>
+		<nav
+		class="navbar_bottom navbar-expand-lg navbar-light d-none d-lg-block header_nav_bottom"
+		>
+		<div class="container text-light">
+					<!-- <a href="/admin/book/new" class="main_a_txt me-3">책 등록</a>
+					<a href="/admin/books" class="main_a_txt me-3">책 관리</a> -->
+		<div class="flex-fill">
+                    <ul class="nav navbar-nav d-flex justify-content-center mx-lg-auto">
+                        <li class="nav-item ul_li">
+                        </li>
+                        <li class="nav-item ul_li">
+                            <a class="nav-a" href="index.html">자료</a>
+                        </li>
+                        <li class="nav-item  ul_li">
+                            <a class="nav-a" href="about.html">About</a>
+                        </li>
+                        <li class="nav-item  ul_li">
+                            <a class="nav-a" href="shop.html">1:1문의</a>
+                        </li>
+                        <li class="nav-item  ul_li">
+                        </li>
+                    </ul>
+                </div>
+			
+		</div>
+	</nav>
+
+	<!-- Modal -->
+	<div class="modal fade bg-white" id="templatemo_search" tabindex="-1"
+		role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="w-100 pt-1 mb-5 text-right">
+				<button type="button" class="btn-close" data-bs-dismiss="modal"
+					aria-label="Close"></button>
+			</div>
+			<form action="" method="get"
+				class="modal-content modal-body border-0 p-0">
+				<div class="input-group mb-2">
+					<input type="text" class="form-control" id="inputModalSearch"
+						name="q" placeholder="Search ...">
+					<button type="submit"
+						class="input-group-text bg-success text-light">
+						<i class="fa fa-fw fa-search text-white"></i>
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+</header>
+</html>

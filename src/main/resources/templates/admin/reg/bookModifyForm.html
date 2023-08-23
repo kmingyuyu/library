@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+
+<div layout:fragment="content">
+	
+	<th:block layout:fragment="css">
+
+		<link rel="stylesheet" href="/css/bookForm.css">
+
+	</th:block>
+
+	
+		<div class="site-section mb-5 category_box">
+			<div class="container py-2">
+			<div class="category_box_page"> 
+				<a href="/">MAIN</a> <span> > </span> 
+				<a href="/admin/books">도서관리</a> <span> > </span>
+				<span class="now_page">도서수정</span> 
+			</div>
+			<div class="text-center py-3">
+				<h2>도서 수정</h2>
+			</div>
+			</div>
+		</div>
+
+	<div class="site-section mb-5">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="px-lg-5 py-lg-4 border">
+						<form role="form" th:action="@{'/admin/book/update/' + ${bookFormDto.id}}" method="post"
+							enctype="multipart/form-data" th:object="${bookFormDto}"
+							name="bookForm">
+
+							<input type="hidden" th:field="*{id}" />
+							
+							<div class="d-flex">
+								
+								<div class="form-group row col-md-6 me-3 ">
+								<div class="col-md-12 mb-2" >
+									<label th:for="bookName" class="bookform_title">도서 명 <span class="insert_span">*&nbsp;</span>
+									 <span th:if="${#fields.hasErrors('bookName')}" th:errors="*{bookName}" class="fieldError"></span>  </label>
+									<input type="text" class="form-control form-custom" th:field="*{bookName}"
+									 >
+								</div>
+								
+								<div class="col-md-12 mb-2">
+									<label th:for="writer" class="bookform_title">작가 명 <span class="insert_span">*&nbsp;</span>
+									<span th:if="${#fields.hasErrors('writer')}" th:errors="*{writer}"
+										class="fieldError"></span>	
+									</label> <input
+										type="text" class="form-control" th:field="*{writer}"
+										>
+								</div>
+								
+								<div class="col-md-12 mb-2">
+									<label th:for="publisher" class="bookform_title">출판사 명 <span class="insert_span">*&nbsp;</span>
+										<span th:if="${#fields.hasErrors('publisher')}" th:errors="*{publisher}"
+										class="fieldError"></span>	
+									</label> <input
+										type="text" class="form-control" th:field="*{publisher}"
+										>
+								</div>	
+								
+									<div class="col-md-12 mb-2">
+									<label th:for="pubDate" class="bookform_title">출간일 <span class="insert_span">*&nbsp;</span>
+									<span th:if="${#fields.hasErrors('pubDate')}" th:errors="*{pubDate}"
+										class="fieldError"></span>	
+									</label> <input
+										type="text" class="form-control" th:field="*{pubDate}"
+										>
+								</div>
+								
+								<div class="col-md-6 mb-2">
+									<div class="bookform_title">카테고리  <span class="insert_span">*&nbsp;</span>
+									<span th:if="${#fields.hasErrors('typeOk')}" th:errors="*{typeOk}"
+										class="fieldError"></span>	
+									</div>
+									<select class="form-select" th:field="*{typeOk}">
+										<option value="none"  selected>-선택-</option>
+										<option value="HUMANITIES">인문학</option>
+										<option value="FICTION">소설</option>
+										<option value="COOK">요리</option>
+										<option value="RELIGION">종교</option>
+										<option value="TRAVEL">여행</option>
+										<option value="TEENAGER">청소년</option>
+										<option value="COMIC">만화</option>
+										<option value="HISTORY_CULTURE">역사/문화</option>
+
+									</select>
+								</div>
+							</div>
+					
+						
+							<div class="form-group row col-md-6">
+								
+								<th:block th:if="${not #lists.isEmpty(bookFormDto.bookImgDtoList)}" th:each="bookImgDto, status: ${bookFormDto.bookImgDtoList}">
+										
+								<div class="col-md-12" th:if="${status.index == 0}">
+									<label for="formFile" class="bookform_title">메인 이미지</label> 								
+									<input type="hidden" name="bookImgIds" th:value="${bookImgDto.id}">
+									<input class="form-control form-custom_file" type="file" id="bookImgFile" name="bookImgFile">
+								</div>
+								<div class="col-md-12" th:if="${status.index == 1}">
+									<label for="formFile" class="bookform_title">사이드 이미지</label> 								
+									<input type="hidden" name="bookImgIds" th:value="${bookImgDto.id}">
+									<input class="form-control form-custom_file" type="file" id="bookImgFile" name="bookImgFile">
+								</div>
+								<div class="col-md-12" th:if="${status.index == 2}">
+									<label for="formFile" class="bookform_title">뒷면 이미지</label> 								
+									<input type="hidden" name="bookImgIds" th:value="${bookImgDto.id}">
+									<input class="form-control form-custom_file" type="file" id="bookImgFile" name="bookImgFile">
+								</div>
+									
+								</th:block>		
+								
+								
+								<div class="col-md-12">
+									<div class="bookform_title">등록된 이미지</div>
+							<div class="filebox preview-image">
+								
+								<div class="bookform_title">메인 이미지 <span class="insert_span">*&nbsp;</span>
+								<span th:if="${#fields.hasErrors('typeOk')}" th:errors="*{typeOk}"
+										class="fieldError"></span>
+								</div>
+ 								 <input class="upload-name" value="파일선택" disabled="disabled" >
+  								<label for="input-file">업로드</label>
+ 								 <input type="file" id="input-file" class="upload-hidden"> 
+ 								 
+ 								 <div class="bookform_title">사이드 이미지 <span class="insert_span">*&nbsp;</span></div>
+ 								 <input class="upload-name" value="파일선택" disabled="disabled" >
+  								<label for="input-file">업로드</label> 
+ 								 <input type="file" id="input-file" class="upload-hidden"> 
+ 								 
+ 								 <div class="bookform_title">뒷면 이미지 <span class="insert_span">*&nbsp;</span></div>
+ 								 <input class="upload-name" value="파일선택" disabled="disabled" >
+  								<label for="input-file">업로드</label> 
+ 								 <input type="file" id="input-file" class="upload-hidden"> 
+							</div>
+								
+							</div>
+							</div>
+							
+							</div>
+							
+
+
+							<div class="form-group row">
+									<div class="col-md-12">
+									<label th:for="story" class="bookform_title">줄거리  <span class="insert_span">*</span></label>
+									<textarea rows=10 class="form-control" th:field="*{story}"
+										 id="floatingTextarea"></textarea>
+									<p th:if="${#fields.hasErrors('story')}"
+										th:errors="*{story}" class="fieldError">Incorrect
+										Data</p>
+								</div>
+								
+							</div>
+						
+							<div class="form-group mt-4">
+								<div class="col-md-12 d-flex justify-content-center ">
+									<button type="button" onclick="beforeSubmit()"
+										class="btn-custom_modify me-3" >도서수정</button>
+									<button type="button" onclick="beforeSubmitCancle()"
+										class="btn-custom_modify btn-cancle" >수정취소</button>
+								</div>
+							</div>
+
+							<input type="hidden" th:name="${_csrf.parameterName}"
+								th:value="${_csrf.token}">
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+</div>
+
+
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+		
+	$(document).ready(function(){
+    	var errorMessage = [[${errorMessage}]];
+    	if(errorMessage != null){
+        	alert(errorMessage);
+    	}
+    	
+		bindDomEvent(); //이벤트를 등록
+	});
+	
+
+	
+	// 수정
+	function beforeSubmit() {
+		
+		var f = confirm("도서를 수정 하시겠습니까?")
+			
+			if(f) {
+				alert("수정 되었습니다");
+				const f = document.bookForm;
+				f.submit();
+			}
+		
+	}
+	
+	// 취소
+	function beforeSubmitCancle() {
+		
+		var f = confirm("수정취소 하시겠습니까?")
+			
+			if(f) {
+				alert("취소 되었습니다");
+				window.location.href= "/admin/books";
+			}
+		
+	}
+	
+	$(document).ready(function(){
+  var fileTarget = $('.filebox .upload-hidden');
+
+  fileTarget.on('change', function(){  // 값이 변경되면
+    if(window.FileReader){  // modern browser
+      var filename = $(this)[0].files[0].name;
+    } 
+    else {  // old IE
+      var filename = $(this).val().split('/').pop().split('\\').pop();  // 파일명만 추출
+    }
+    
+    // 추출한 파일명 삽입
+    $(this).siblings('.upload-name').val(filename);
+  });
+}); 
+
+
+
+
+	//preview image 
+    var imgTarget = $('.preview-image .upload-hidden');
+
+    imgTarget.on('change', function(){
+        var parent = $(this).parent();
+        parent.children('.upload-display').remove();
+
+        if(window.FileReader){
+            //image 파일만
+            if (!$(this)[0].files[0].type.match(/image\//)) return;
+            
+            var reader = new FileReader();
+            reader.onload = function(e){
+                var src = e.target.result;
+                parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img src="'+src+'" class="upload-thumb"></div></div>');
+            }
+            reader.readAsDataURL($(this)[0].files[0]);
+        }
+
+        else {
+            $(this)[0].select();
+            $(this)[0].blur();
+            var imgSrc = document.selection.createRange().text;
+            parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img class="upload-thumb"></div></div>');
+
+            var img = $(this).siblings('.upload-display').find('img');
+            img[0].style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enable='true',sizingMethod='scale',src=\""+imgSrc+"\")";        
+        }
+    });
+	
+	//파일 첨부시 확장자가 이미지 파일인지 검사한다
+    function bindDomEvent(){
+        $(".custom-file-input").on("change", function() {
+            var fileName = $(this).val().split("\\").pop();  //이미지 파일명
+            var fileExt = fileName.substring(fileName.lastIndexOf(".")+1); // 확장자 추출
+            fileExt = fileExt.toLowerCase(); //소문자 변환
+
+            if(fileExt != "jpg" && fileExt != "jpeg" && fileExt != "gif" && fileExt != "png" && fileExt != "bmp"){
+                alert("이미지 파일만 등록이 가능합니다.");
+                return;
+            }
+
+            $(this).siblings(".custom-file-label").html(fileName);
+        });
+    }
+	
+	
+	</script>
+</th:block>
+</html>

@@ -1,0 +1,158 @@
+@charset "UTF-8";
+
+header {
+	width: 100%;
+}
+
+a {
+	color:black;
+	text-decoration:none !important; 
+}
+
+ul , li , h1 , h2 , h3 , h4 , button {
+	padding: 0;
+	margin: 0;
+}
+
+button:focus {
+	outline: none !important;
+}
+
+.container {
+	padding: 0;
+	
+}
+
+a:hover {
+	color: black;
+}
+
+.row {
+     --bs-gutter-x: 0; 
+     --bs-gutter-y: 0;
+}
+.row>* {
+	padding: 0;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+.insert_span {
+	color: #0D6EFD;
+}
+
+
+
+.form-control:focus {
+	border: 1px solid  #0D6EFD;
+	box-shadow: none;
+}
+
+.form-select:focus {
+   border: 1px solid  #0D6EFD;
+	box-shadow: none;
+}
+
+.category_box {
+	border-bottom: 1px solid #dedede;
+	background-color: RGB(246, 246, 246);
+	
+}
+
+.category_box_page {
+	float: right;
+	color: rgb(167, 167, 167);
+}
+
+.category_box_page a , .category_box_page span {
+	font-size:12px !important;	
+	font-weight: bold !important;
+	color: rgb(167, 167, 167);
+}
+
+.category_box_page a:hover {
+	color: RGB(38, 109, 248);
+}
+
+.now_page {
+	color: rgb(121, 121, 121) !important;
+}
+
+.category_text {
+	padding: 20px;
+	border: 1px solid gray;
+}
+
+.category_text div {
+	text-align: center;
+}
+
+
+.navbar_top {
+	padding-top: 12px ;
+	padding-bottom: 12px ;
+}
+
+.navbar_bottom {
+	padding-top: 15px ;
+	padding-bottom: 15px ;
+}
+
+.header_nav_bottom {
+	border-bottom:1px solid #dedede ; 
+	border-top:1px solid #dedede ; 
+}
+
+.main_a_txt {
+	text-align : center;
+	color: black !important;
+	font-size: 15px !important;
+	font-weight: bold !important;
+}
+
+.header_nav_bottom_ul{
+	display: flex;
+}
+
+.ul_li {
+	width: 20%;
+}
+
+.nav-a {
+	color: #595959;
+	font-size:20px !important;
+	font-weight: bold !important;
+	display:flex;
+	justify-content:center;
+}
+
+.nav-a:hover {
+	color: #0D6EFD;
+}
+
+.admin_box span {
+	font-size:12px;
+	color: white;
+}
+
+.admin_box a {
+	font-size:12px !important;
+	color: white !important;
+}
+
+.main_a_txt span {
+	color: #787878;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.main_a_txt span:hover {
+	color: black;
+}
+
+
+
+
+

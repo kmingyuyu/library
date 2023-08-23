@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+	
+	<div layout:fragment="content">
+	
+	<th:block layout:fragment="css">
+	
+		<link rel="stylesheet" href="css/main.css">
+		
+		
+<!-- 제이쿼리 불러오기 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+ 
+<!-- Slick 불러오기 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css">
+		
+		
+	</th:block>
+	
+	 <section class="pb-5 main_box">
+	 <div class ="main_box_in2">
+        	<img class="main_img" alt="메인 이미지" src="img/library_3.jpg">
+	 </div>
+	 <div class="main_box_in1">
+	 <form action="" method="post" name="searchform" class="form">	
+      <input type="text" name="searchValue" class="form_label" placeholder="검색어를 입력 해주세요." maxlength="20"/>
+      <input type="button" class="form_button" onclick="sendIt_search();"/>
+    </form>
+    	<div class="main_box_in3">
+      <input type="button" class="detail_button" value="상세검색"/>		
+    	</div>
+	 </div>
+    </section>
+	
+	
+  
+
+<!-- <section class="container pb-5 d-flex">
+ 		<div class="ml-center"> 
+            <div class="mlc-2 m-sm-0">
+                <div><span>뉴스</span>
+                  <a href="#" class="mlc2-bt">전체보기</a>
+                </div>
+                <div>
+                  <div class="mlc2-llout">
+                    <a href="#">직방이 만드는 새로운 시대의 주거 혁신</a></div>
+                  <div class="mlc2-llout">
+                    <a href="#">4월 분양,전년 동기 대비 1만 2천여 세대 늘어나</a></div>
+                  <div class="mlc2-llout">
+                   <a href="#">나의 공간을 내 취향대로</a></div>
+                  <div class="mlc2-llout">
+                    <a href="#">'방 3개짜리 원룸'나온다</a></div>
+                  <div class="mlc2-llout">
+                    <a href="#">VR로 집구경 미리 해보고 산다</a></div>
+               </div>
+          </div>
+            <div class="mlc-2">
+              <div>
+                <span>공지사항</span>
+                <a href="#" class="mlc2-bt">전체보기</a>
+              </div>
+              <div>
+                <div class="mlc2-llout"><a href="#">[공지]직방 서비스 정상화 안내</a></div>
+                <div class="mlc2-llout"><a href="#">[공지]직방 위치기반서비스 이용약관(2002/06/01)개정 안내 드립니다</a></div>
+                <div class="mlc2-llout"><a href="#">[공지]직방 internetExplorer 11 지원 종료 안내</a></div>
+                <div class="mlc2-llout"><a href="#">[공지]직방 개인정보처리방침(2021/12/14)개정을 안내 드립니다</a></div>
+                <div class="mlc2-llout"><a href="#">[공지]직방 개인정보처리방침(2021/06/01)개정을 안내 드립니다</a></div>
+              </div>
+            </div>
+        </div>
+ 		
+        <div class="row col-md-6 d-flex">
+
+            <div class="col-md-6 col-lg-3 pb-5">
+                <div class="h-100 services-icon-wap shadow">
+                    <a class="text-center" href="/">Delivery Services</a>
+                </div>
+            </div>
+	
+            <div class="col-md-6 col-lg-3 pb-5">
+                <div class="h-100 py-5 services-icon-wap shadow">
+                    <div class="h1 text-success text-center"><i class="fas fa-exchange-alt"></i></div>
+                    <a>Shipping & Return</a>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3 pb-5">
+                <div class="h-100 py-5 services-icon-wap shadow">
+                    <div class="h1 text-success text-center"><i class="fa fa-percent"></i></div>
+                    <h2 class="h5 mt-4 text-center">Promotion</h2>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3 pb-5">
+                <div class="h-100 py-5 services-icon-wap shadow">
+                    <div class="h1 text-success text-center"><i class="fa fa-user"></i></div>
+                    <h2 class="h5 mt-4 text-center">24 Hours Service</h2>
+                </div>
+            </div>
+        </div>
+    </section>-->
+    
+    
+    
+    
+<section class="container pb-5 ">
+	<div class="d-flex justify-content-between">
+<ul class="nav category_ul" id="myTab" role="tablist">
+  <li class="nav-item category_li" role="presentation">
+    <button class="nav-link active category_bt click_active" id="home-tab" data-bs-toggle="tab"
+     data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true" onclick="setLink_new()">신착도서</button>
+  </li>
+  <li class="nav-item category_li" role="presentation">
+    <button class="nav-link category_bt" id="profile-tab" data-bs-toggle="tab" 
+    data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false" onclick="setLink_count()">인기도서</button>
+  </li>
+</ul>
+		<div class="total_page">
+			<a id="total_link" href="/book/totalNew">전체보기 +</a>
+		</div>
+		
+	</div>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+
+		
+		 <div class="main-slider slider-wrap">
+	 
+	
+    	 	<th:block th:each="book , status:${newBooks}">
+    <div class="slider-items">
+		
+      <div class="item item-related-book">
+		  
+		  <div class="collection-item book">
+		  <div class="item-cover">
+				<a th:href="'/book/' + ${book.id}">
+		  <img th:src="${book.imgUrl}" alt=""  class="item-cover-image">
+				</a>
+		  </div>
+		    <div class="item-meta">
+		<div class="item-title">
+			<h4>
+				<a th:href="'/book/' + ${book.id}" tabindex="0">[[${book.bookName}]]</a>
+			</h4>
+		</div>
+		<div class="item-author">
+			[[${book.writer}]]([[${book.pubDate}]])
+		</div>
+		</div>
+		  </div>
+	  </div>
+		
+	</div>
+		
+    </th:block>
+    	
+    </div>
+    
+  </div>
+  <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+    
+			 <div class="main-slider slider-wrap">
+	 
+	
+    	<th:block th:each="book , status:${countBooks}">
+		
+      <div class="item item-related-book">
+		  
+		  <div class="collection-item book">
+		  <div class="item-cover">
+				<a th:href="'/book/' + ${book.id}">
+		  <img th:src="${book.imgUrl}" alt=""  class="item-cover-image">
+				</a>
+		  </div>
+		    <div class="item-meta">
+		<div class="item-title">
+			<h4>
+				<a th:href="'/book/' + ${book.id}" tabindex="0">[[${book.bookName}]]</a>
+			</h4>
+		</div>
+		<div class="item-author">
+			[[${book.writer}]]([[${book.pubDate}]])
+		</div>
+		</div>
+		  </div>
+	  </div>
+    </th:block>
+    	
+    </div>
+    
+  
+    
+  </div>
+</div>
+
+</section>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<th:block layout:fragment="script">
+	
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
+	
+	<script>
+          
+          $(document).ready(function(){
+  $('.main-slider').slick({    
+    infinite: false ,      // 무한반복
+     slidesToShow: 5,     // 보여지는 슬라이드 개수
+     slidesToScroll: 1,   // 넘어가는 슬라이드 개수
+     dots: false ,           // 점 네비게이션 표시
+     arrows: true,       // 화살표 표시
+     fade:false  ,           //페이드 효과
+     autoplay: false,       //자동스크롤
+     draggable : true,     //드래그 가능 여부 
+    autoplaySpeed: 4000   //자동스크롤 속도
+    /* 반응형
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
+    */
+  });
+});
+          
+          
+    </script>
+	
+	<script th:inline="javascript">
+	  
+	  function setLink_new() {
+		document.getElementById('profile-tab').classList.remove('click_active');
+		document.getElementById('home-tab').className += ' click_active';
+        document.getElementById("total_link").href = "/book/totalNew";
+		}	
+
+	  function setLink_count() {
+		document.getElementById('home-tab').classList.remove('click_active');  
+		document.getElementById('profile-tab').className += ' click_active';
+        document.getElementById("total_link").href = "/book/totalCount";
+		}	
+
+	
+	
+	</script>
+	</th:block>
+
+
+</html>

@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+.join_box {
+	padding: 20px;
+    overflow: auto;
+    border: 1px solid #ccc;
+    background: #f3f3f3;
+    color: #666;
+    margin: 0 0 10px;
+	
+}
+
+.join_box p {
+	font-size: 8px !important;
+}
+
+.join_box li {
+	font-size: 12px !important;
+} 

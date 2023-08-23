@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="../css/loginForm.css"/>
+</head>
+<body>
+	
+		<div class="loginForm">	
+		<p class="logo"><a href="/" title="메인화면"><img src="/img/MOOK.png" alt="로고"></a></p>
+		<div id="kor">
+			<form action="/login" name="loginForm" method="post" onsubmit="return fn_submit()">
+				<input type="hidden" name="deviceName" id="deviceName" value="">
+				<input type="hidden" name="snsId" id="snsId">
+				<input type="hidden" name="provider" id="provider">
+				
+				
+					
+					
+					
+						<input type="hidden" name="retUrl" value="/">
+					
+				
+				
+				<fieldset>
+					<legend>로그인</legend>			
+					<div class="inputFields">
+						<p class="inputId"><input type="text" id="id" name="id" title="도서관 아이디" placeholder="도서관 아이디"></p>
+						<p class="inputPw"><input type="password" id="password" name="password" title="비밀번호(9~15자리)" placeholder="비밀번호(9~15자리)"></p>
+						
+						<p class="saveId">
+							
+						</p>
+						<p class="inputSubmit"><input type="submit" value="로그인"></p>
+						<p class="inputSubmit"><input type="submit" value="로그인"></p>
+						<p class="inputSubmit"><input type="submit" value="로그인"></p>
+					
+					</div>
+					<div class="loginMenu">
+						<a href="/memberJoin/findId?target=Y" title="아이디찾기">아이디찾기</a>
+						<a href="/memberJoin/findPw?target=Y" title="비밀번호 재설정">비밀번호 재설정</a>
+						<a href="/memberJoin/agree?target=Y" target="_blank" title="새창으로열림">회원가입</a>
+					</div>
+					<p class="loginBg"></p>
+					<div class="loginFooter">
+						<!--  
+						<div class="menu">
+							<a href="/rwww/html/ko/privacy.jsp" class="privacy" title="개인정보처리방침">개인정보처리방침</a>
+							<a href="/bbs/content/3_9680" title="도난주의">도난주의</a>
+							<a href="/bbs/content/3_9871" title="CCTV설치 및 운영안내">CCTV설치 및 운영안내</a>
+							<a href="/rwww/html/ko/evacuationInfo.jsp" title="비상대피도 안내">비상대피도 안내</a>
+						</div>
+						-->
+						<div class="address">
+							<p>서울도서관 | 04524 서울특별시 중구 세종대로 110 | 전화번호: 010)7128-0150 </p>
+							<p>이용시간: 화~금 9:00~21:00 / 토,일 9:00~18:00(월요일/공휴일휴관)</p>
+						</div>
+					</div>					
+				</fieldset>
+			</form>
+		</div>
+		
+	</div>
+	
+	
+	
+	
+	
+</body>
+</html>

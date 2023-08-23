@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+
+<head>
+	<meta name="_csrf" th:content="${_csrf.token}" />
+	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+</head>
+
+
+<div layout:fragment="content">
+
+	<th:block layout:fragment="css">
+
+		<link rel="stylesheet" href="/css/bookDetail.css">
+
+	</th:block>
+
+
+	<div class="site-section">
+		<div class="container">
+			<div class="row">
+				<input type="hidden" id="bookId" th:value="${book.id}">
+				<section class="container pt-5 pb-4 d-flex b_line">
+							<div class="col-md-4 px-2">
+								<img th:src="${book.bookImgDtoList[0].imgUrl}" th:alt="${book.bookName}" class="dt_img">
+							</div>
+							<div class="col-md-8">
+								<div class="mb-2">
+									<div class="book_name">[[${book.bookName}]] <span class="book_count"> ([[${book.borrowCount}]]회 대출) </span> </div>
+								</div>
+								<div class="mb-2">
+									<div class="book_type">[[${book.typeOk}]]</div>
+								</div>
+								<div class="d-flex">
+									<div class="book_category">작가</div>
+									<div class="book_value">[[${book.writer}]]</div>
+								</div>
+								<div class="d-flex">
+									<div class="book_category">출판사</div>
+									<div class="book_value">[[${book.publisher}]]</div>
+								</div>
+								<div class="d-flex">
+									<div class="book_category">출판일</div>
+									<div class="book_value">[[${book.pubDate}]]</div>
+								</div>
+								<div class="">
+									<button th:if="${book.stockOk.toString() == 'Y'}" type="button" class="borrow_bt" onclick="bookReserve()">대출예약</button>
+									<button th:if="${book.stockOk.toString() == 'N'}" type="button" class="borrow_bt borrow_bt_disabled" disabled>현재 대출중입니다</button>
+									<button type="button" class="steamed_bt">찜하기</button>
+								</div>
+							</div>
+				</section>
+
+				<section class="container pt-5">
+					<div class="item-location item-additional-info">
+						<h3 class="mb-3">소장정보</h3>
+						<div
+							class="item-location-header justify-content-start align-items-center mb-3">
+							<div class="item-location-content tab-content">
+
+
+								<div class="tab-pane fade show active" id="locs-1"
+									role="tabpanel" aria-labelledby="locs-1-tab">
+									<div class="table-container table-locations">
+										<table class="table table-sm table-hover text-center">
+											<thead>
+												<tr>
+													<th scope="col">제목</th>
+													<th scope="col">등록번호</th>
+													<th scope="col">도서상태</th>
+													<th scope="col">반납예정일</th>
+													<th scope="col">예약</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>[[${book.bookName}]]</td>
+													<td>[[${book.id}]]</td>
+													<th:block th:if="${book.stockOk.toString()} == 'Y' " >
+														<td class="str_yes">대출가능</td>
+														<td>-</td>
+														<td class="str_yes">예약가능</td>
+													</th:block>
+													
+													<th:block th:if="${book.stockOk.toString()} == 'N' " >
+														<td class="str_no">대출중</td>
+														<td>-</td>
+														<td class="str_no">대출중</td>
+													</th:block>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="item-additional-info item-overview-info">
+						<h3 class="mb-3">컨텐츠 정보</h3>
+						<div class="item-overview-info-block mb-5">
+							<h4>책소개</h4>
+							<div class="item-overview-info-block-body">
+								<p>[[${book.story}]]</p>
+							</div>
+						</div>
+						<div class="item-overview-info-block mb-5">
+							<h4>저자소개</h4>
+							<div class="item-overview-info-block-body">
+								<p>[[${book.story}]]</p>
+							</div>
+						</div>
+					</div>
+
+				</section>
+
+
+
+
+			</div>
+		</div>
+	</div>
+</div>
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+		
+		function bookReserve(){
+			
+
+			var date = new Date();
+		    var year = date.getFullYear();
+		    var month = ("0" + (1 + date.getMonth())).slice(-2);
+		    var day = ("0" + date.getDate()).slice(-2);
+		    var returnday = ("0" + date.getDate()+7).slice(-2);
+		    
+			if(confirm("대출 예약하시겠습니까?\n"+
+					   "대출기간을 7일 입니다\n"+
+					   "대출기간 : " + year + "-" + month + "-" + day + " ~ " +
+					   year + "-" + month + "-" + returnday )){
+				
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			
+			var url = "/borrow";
+			
+			var Data = {bookId : $("#bookId").val()}
+			
+			var param = JSON.stringify(Data);
+			
+
+			$.ajax({
+				url : url, //request URL
+				type : "POST", //전송방식
+				contentType : "application/json",
+				data : param, //서버에 전송할 데이터
+				beforeSend : function(xhr) {
+					//데이터를 전송하기전에 헤더에 csrf 값을 설정
+					xhr.setRequestHeader(header, token);
+				},
+				dataType : "json",
+				cache : false,
+				success : function(result, status) {
+					alert("예약 완료 되었습니다.");
+					//location.href = '/';
+				},
+				error : function(jqXHR, status, error) {
+					if (jqXHR.status == '401') {
+						alert('로그인 후 이용해주세요.');
+						location.href = '/member/login';
+					} else {
+						//에러메세지 출력(ResponseEntity에서 받아온 값을 출력해준다)
+						alert(jqXHR.responseText); 
+					}
+				}
+			});
+				
+				
+			}
+			
+			
+			
+			
+			
+			
+		}
+		
+	</script>
+</th:block>
+
+
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+
+<div layout:fragment="content">
+
+	<th:block layout:fragment="css">
+
+		<link rel="stylesheet" href="/css/bookTotal.css">
+
+	</th:block>
+
+
+	<div class="site-section category_box">
+		<div class="container py-1">
+			<div class="category_box_page">
+				<a href="/">MAIN</a> <span> > </span> <span class="now_page">인기도서</span>
+			</div>
+			<div class="text-center py-4">
+				<h2>인기도서</h2>
+			</div>
+		</div>
+	</div>
+	<div
+		class="navbar-expand-lg navbar-light d-lg-block select_nav_bottom mb-5">
+
+
+
+		<div class="flex-fill">
+			<div class="nav navbar-nav d-flex justify-content-center mx-lg-auto">
+				<div class="nav_link link_active" id="typediv">
+					<a href="/book/totalCount"  class="nav_link_a" >전체</a>
+				</div>
+				<div class="nav_link" id="HUMANITIES">
+					<a href="/book/totalCount?typeOk=HUMANITIES" class="nav_link_a">인문학</a>
+				</div>
+				<div class="nav_link" id="FICTION" >
+					<a href="/book/totalCount?typeOk=FICTION" class="nav_link_a">소설</a>
+				</div>
+				<div class="nav_link"  id="TRAVEL">
+					<a href="/book/totalCount?typeOk=TRAVEL" class="nav_link_a">여행</a>
+				</div>
+				<div class="nav_link" id="HISTORY_CULTURE" >
+					<a href="/book/totalCount?typeOk=HISTORY_CULTURE" class="nav_link_a">역사/문화</a>
+				</div>
+
+					<input type="hidden" th:value="${bookSearchDto.typeOk}" id="type"> 
+			</div>
+		</div>
+
+
+	</div>
+
+	<div class="site-section mt-5 mb-5">
+		<div class="container mb-4">
+			<div class="row">
+				<th:block th:object="${bookSearchDto}">
+
+					<div class="search_form">
+						<select th:field="*{searchBy}" class="form_select form-control">
+							<option value="bookName">도서명</option>
+							<option value="writer">저자명</option>
+							<option value="publisher">출판사명</option>
+						</select> <input type="text" class="form-control form_search"
+							th:field="*{searchQuery}" placeholder="검색어를 입력해주세요">
+						<button id="searchBtn" type="submit" class="form_search_bt">검색</button>
+					</div>
+
+				</th:block>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row pb-2">
+				<div class="d-flex justify-content-between">
+
+					<div class="book_size">
+						<span>1 - 12</span> 건 출력 / 총 <span>
+							[[${books.getTotalElements()}]] </span> 건
+					</div>
+
+					<div class="book_page">
+						<nav
+							th:with="start=${(books.number/maxPage)*maxPage + 1}
+			                 ,end=(${(books.totalPages == 0) ? 1 : (start + (maxPage - 1) < books.totalPages ? start + (maxPage - 1) : books.totalPages)})"
+							aria-label="Page navigation example">
+							<ul class="pagination d-flex justify-content-center">
+
+
+
+								<li class="page-item" th:classappend="${books.first}?'disabled'">
+									<a class="page-link"
+									th:onclick="'javascript:page(' + ${books.number - 1} +')'"><<</a>
+								</li>
+
+								<li class="page-item"
+									th:each="page: ${#numbers.sequence(start, end)}"
+									th:classappend="${books.number eq page-1}?'active':''"><a
+									class="page-link" th:inline="text"
+									th:onclick="'javascript:page(' + ${page - 1} +')'">[[${page}]]</a>
+								</li>
+
+								<li class="page-item" th:classappend="${books.last}?'disabled'">
+									<a class="page-link"
+									th:onclick="'javascript:page(' + ${books.number + 1} +')'">>></a>
+								</li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="row border_line">
+				<th:block th:each=" book , status:${books}">
+					<div class="col-6 col-md-4 col-lg-3 col-xl-2 box_custom">
+						<div class="collection-item book">
+							<div class="item-cover">
+								<a th:href="'/book/' + ${book.id}"> <img
+									class="item-cover-image" th:alt="${book.bookName}"
+									th:src="${book.imgUrl}"> <span class="item-ranking">[[${status.index+1}]]</span>
+								</a>
+							</div>
+							<div class="item-meta">
+								<div class="item-title">
+									<h4>
+										<a th:href="'/book/' + ${book.id}">[[${book.bookName}]] <span>([[${book.borrowCount}]]회 대출)</span> </a>
+									</h4>
+
+								</div>
+								<div class="item-author">[[${book.writer}]]</div>
+								<div class="item-pub">[[${book.publisher}]]
+									([[${book.pubDate}]])</div>
+							</div>
+						</div>
+					</div>
+				</th:block>
+			</div>
+		</div>
+
+
+
+	</div>
+</div>
+
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+	
+
+		$(document).ready(function() {
+			
+			const urlParams = new URL(location.href).searchParams;
+			const name = urlParams.get('typeOk');
+			if(name == "HUMANITIES"){
+				document.querySelector("#HUMANITIES").setAttribute("class", "link_active");
+				document.querySelector("#typediv").removeAttribute( 'class');
+				document.querySelector("#typediv").setAttribute("class", "nav_link");
+			}else if(name == "FICTION"){
+				document.querySelector("#FICTION").setAttribute("class", "link_active");
+				document.querySelector("#typediv").removeAttribute( 'class');
+				document.querySelector("#typediv").setAttribute("class", "nav_link");
+			}else if(name == "TRAVEL"){
+				document.querySelector("#TRAVEL").setAttribute("class", "link_active");
+				document.querySelector("#typediv").removeAttribute( 'class');
+				document.querySelector("#typediv").setAttribute("class", "nav_link");
+			}else if(name == "HISTORY_CULTURE"){
+				document.querySelector("#HISTORY_CULTURE").setAttribute("class", "link_active");
+				document.querySelector("#typediv").removeAttribute( 'class');
+				document.querySelector("#typediv").setAttribute("class", "nav_link");
+			}
+			
+			$("#searchBtn").on("click", function(e) {
+				e.preventDefault(); //submit되는걸 방지
+				page(0);
+			});
+			
+		});
+		
+		
+		function page(page) {
+			//입력한 값을 전부 가지고 온다.
+			var searchBy = $("#searchBy").val();
+			var searchQuery = $("#searchQuery").val();
+			var type = $("#type").val();
+			
+			//주소 이동
+			location.href = "/book/totalCount/" + page + "?typeOk=" + type  + "&searchBy=" + searchBy
+					+ "&searchQuery=" + searchQuery + "";
+		}
+	</script>
+</th:block>
+
+
+
+</html>
+

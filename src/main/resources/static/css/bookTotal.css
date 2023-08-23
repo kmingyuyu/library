@@ -1,0 +1,192 @@
+@charset "UTF-8";
+
+.select_nav_bottom {
+	border-bottom: 1px solid #dedede;
+}
+
+.nav_link {
+}
+
+.nav_link:hover {
+	transition: 0.2s ease-out;
+	background-color: rgb(2, 87, 215);
+}
+
+.nav_link:hover > .nav_link_a {
+	transition: 0.2s ease-out;
+	color: white !important;
+	
+}
+
+.nav_link_a {
+	display: block;
+	line-height: 2.8rem;
+    height: 2.8rem;
+    padding: 0 1.5rem;
+    font-size: 1rem !important;
+    font-weight: 550 !important;
+}
+
+.link_active {
+	background-color: rgb(2, 87, 215);
+}
+
+.link_active a {
+	color: white !important;
+}
+
+
+.search_form {
+	margin: 0 auto;
+	display: flex;
+	justify-content: center;
+}
+
+
+
+
+.form_select {
+	font-size: .8rem;
+	width: 80px;
+	height: 40px;
+	border-radius: 0px;
+	padding: 5px;
+	text-align: center;
+	font-weight: bold;
+	background-color: rgb(246, 246, 246);
+	border-top-left-radius: 6px;
+	border-bottom-left-radius: 6px;
+}
+
+
+
+.form_search {
+	width: 350px;
+	height: 40px;
+	border-radius: 0px;
+	border: 1px solid #dee2e6;
+}
+
+.form_search::placeholder {
+	font-size: 15px;
+	font-weight: 550;
+	color: rgb(130, 146, 159);
+}
+
+.form_search_bt {
+	width: 100px;
+	height: 40px;
+	border: none;
+	border-top-right-radius: 6px;
+	border-bottom-right-radius: 6px;
+	background-color: rgb(126, 151, 192);
+	color: white;
+	font-weight: bold;
+	
+}
+
+.form_search_bt:hover {
+	transition: 0.2s ease-out;
+    background-color: rgb(2, 87, 215);
+}
+
+.form_search_bt:not(:hover) {
+	transition: 0.2s ease-out;
+}
+
+.border_line {
+	border-top: 1px solid #dedede;
+	border-bottom: 1px solid #dedede;
+}
+
+.book_size {
+	font-size: 15px !important;
+	font-weight: bold !important;
+}
+
+.book_size span {
+	font-size: 20px !important;
+}
+
+.book_page {
+	display: flex;
+}
+
+.box_custom {
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+.collection-item {
+	 margin: 3rem 0;
+}
+
+.collection-item .item-cover {
+	position: relative;
+	width: 160px;
+    height: 240px;
+    margin: 0 auto;
+}
+
+.collection-item .item-cover-image {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: 1px solid #dedede;
+}
+
+.collection-item .item-ranking {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    display: block;
+    font-size: 14px;
+    line-height: 14px;
+    padding: 3px 0;
+    width: 20px;
+    height: 20px;
+    background-color: #b09479;
+    color: #fff;
+    font-weight: 700;
+    text-align: center;
+    vertical-align: middle;
+} 
+
+.collection-item .item-meta {
+    text-align: center;
+}
+
+.collection-item .item-title h4 {
+    margin-bottom: 6px;
+    text-align: center;
+}
+
+.collection-item .item-title h4 a {
+	font-size: .9rem !important;
+    line-height: 1.4 !important;
+    font-weight: bold !important;
+    color: #000 !important;
+}
+
+.collection-item .item-title h4 a:hover {
+	transition: 0.2s ease-out;
+	color: rgb(2, 87, 215) !important;
+	}
+
+.collection-item .item-title h4 a:not(:hover){
+	transition: 0.2s ease-out;
+}
+
+.collection-item , .item-author , .collection-item .item-pub {
+	color: #555 !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+}
+
+

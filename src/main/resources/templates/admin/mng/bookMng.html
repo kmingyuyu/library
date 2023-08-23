@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+
+<div layout:fragment="content">
+
+	<th:block layout:fragment="css">
+
+		<link rel="stylesheet" href="/css/bookMng.css">
+
+	</th:block>
+
+	<div class="site-section category_box">
+		<div class="container py-1">
+			<div class="category_box_page">
+				<a href="/">MAIN</a> <span> > </span> <span class="now_page">전체관리</span>
+			</div>
+			<div class="text-center py-4">
+				<h2>전체관리</h2>
+			</div>
+		</div>
+	</div>
+	<div
+		class="navbar-expand-lg navbar-light d-lg-block select_nav_bottom mb-5">
+
+
+
+		<div class="flex-fill">
+			<div class="nav navbar-nav d-flex justify-content-center mx-lg-auto">
+				<div class="nav_link link_active">
+					<a href="/admin/books" class="nav_link_a">도서관리</a>
+				</div>
+				<div class="nav_link">
+					<a href="/admin/books/stock_y" class="nav_link_a">회원관리</a>
+				</div>
+				<div class="nav_link">
+					<a href="/admin/books/stock_n" class="nav_link_a">게시글관리</a>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+
+
+
+
+
+
+	<div class="container mb-4">
+		<div class="row">
+			<th:block th:object="${bookSearchDto}">
+
+				<div class="search_form">
+					<!-- 상품 등록일 -->
+					<!--<select th:field="*{searchDateType}" class=" form_select">
+							<option value="all">전체기간</option>
+							<option value="1d">1일</option>
+							<option value="1w">1주</option>
+							<option value="1m">1개월</option>
+							<option value="6m">6개월</option>
+						</select>-->
+					<!-- 상품명, 등록자 선택 -->
+					<select th:field="*{searchBy}" class="form_select form-control">
+						<option value="bookName">도서명</option>
+						<option value="writer">저자명</option>
+						<option value="publisher">출판사명</option>
+						<option value="createdBy">등록자명</option>
+					</select> <input type="text" class="form-control form_search"
+						th:field="*{searchQuery}" placeholder="검색어를 입력해주세요">
+					<button id="searchBtn" type="submit" class="form_search_bt">검색</button>
+				</div>
+		</div>
+
+	</div>
+	</th:block>
+
+	<div class="container mb-2">
+		<div class="d-flex justify-content-between">
+
+			<div class="book_size">
+				<span>1 - 10</span> 건 출력 / 총 <span>
+					[[${books.getContent().size()}]] </span> 건
+
+			</div>
+
+			<div class="book_page">
+				<nav
+					th:with="start=${(books.number/maxPage)*maxPage + 1}
+			                 ,end=(${(books.totalPages == 0) ? 1 : (start + (maxPage - 1) < books.totalPages ? start + (maxPage - 1) : books.totalPages)})"
+					aria-label="Page navigation example">
+					<ul class="pagination d-flex justify-content-center">
+
+						<li class="page-item"
+							th:each="page: ${#numbers.sequence(start, end)}"
+							th:classappend="${books.number eq page-1}?'active':''"><a
+							class="page-link" th:inline="text"
+							th:onclick="'javascript:page(' + ${page - 1} +')'">[[${page}]]</a>
+						</li>
+
+						<li class="page-item" th:classappend="${books.first}?'disabled'">
+							<a class="page-link"
+							th:onclick="'javascript:page(' + ${books.number - 1} +')'"><</a>
+						</li>
+
+
+						<li class="page-item" th:classappend="${books.last}?'disabled'">
+							<a class="page-link"
+							th:onclick="'javascript:page(' + ${books.number + 1} +')'">></a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="site-section">
+
+
+
+
+
+		<div class="container ">
+			<div class="row">
+				<section class="container">
+					<div class="item-location item-additional-info">
+						<div
+							class="item-location-header justify-content-start align-items-center mb-3">
+							<div class="item-location-content tab-content">
+
+
+								<div class="tab-pane fade show active" id="locs-1"
+									role="tabpanel" aria-labelledby="locs-1-tab">
+									<div class="table-container table-locations">
+										<table class="table table-sm table-hover text-center">
+											<thead>
+												<tr>
+													<th scope="col">No.</th>
+													<th scope="col">책제목</th>
+													<th scope="col">등록번호</th>
+													<th scope="col">도서상태</th>
+													<th scope="col">반납예정일</th>
+													<th scope="col">예약</th>
+													<th scope="col">대출수</th>
+													<th scope="col">등록자</th>
+													<th scope="col">등록일</th>
+													<th scope="col">수정</th>
+													<th scope="col">삭제</th>
+												</tr>
+											</thead>
+											<th:block th:each="book , status:${books.getContent()}">
+												<tbody>
+													<tr>
+														<td>[[${status.index+1}]]</td>
+														<td><a th:href="'/book/' + ${book.id}">[[${book.bookName}]]
+														</a></td>
+														<td>[[${book.id}]]</td>
+														<th:block th:if="${book.stockOk.toString()} == 'Y' ">
+															<td class="str_yes">대출가능</td>
+															<td>-</td>
+															<td class="str_yes">예약가능</td>
+														</th:block>
+
+														<th:block th:if="${book.stockOk.toString()} == 'N' ">
+															<td class="str_no">대출중</td>
+															<td>-</td>
+															<td class="str_no">대출중</td>
+														</th:block>
+														<td>[[${book.borrowCount}]]</td>
+														<td>[[${book.createdBy}]]</td>
+														<td
+															th:text="${#temporals.format(book.regTime, 'yyyy-MM-dd')}"></td>
+														<td><button type="button" class="update_bt"
+																th:onclick="updateBook([[${book.id}]])">수정하기</button></td>
+														<td>
+															<form id="delete_form"
+																th:action="@{'/delete/'+${book.id}}" th:method="delete">
+																<button type="button" class="update_bt"
+																	th:onclick="deleteBook([[${book.bookName}]])">삭제하기
+																</button>
+																<input type="hidden" th:name="${_csrf.parameterName}"
+																	th:value="${_csrf.token}">
+															</form>
+														</td>
+													</tr>
+												</tbody>
+											</th:block>
+											</th:block>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+
+
+				</section>
+
+
+
+			</div>
+
+		</div>
+	</div>
+</div>
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+		$(document).ready(function() {
+
+			$("#searchBtn").on("click", function(e) {
+				e.preventDefault(); //submit되는걸 방지
+				page(0);
+			});
+
+		});
+
+		function updateBook(id) {
+			alert("수정페이지로 이동합니다");
+			window.location.href = '/admin/book/update/' + id;
+		}
+
+		function deleteBook(bookName) {
+
+			if (confirm("해당 도서( " + bookName + " ) 삭제하시겠습니까?")) {
+				alert("삭제 되었습니다");
+				document.getElementById('delete_form').submit();
+			}
+		}
+
+		//페이징버튼 눌렀을때 혹은 검색버튼 눌렀을때 검색어와 selectbox를 get방식으로 주소이동시켜준다.
+		function page(page) {
+			//입력한 값을 전부 가지고 온다.
+			var searchDateType = $("#searchDateType").val();
+			var searchBy = $("#searchBy").val();
+			var searchQuery = $("#searchQuery").val();
+
+			//주소 이동
+			location.href = "/admin/books/" + page + "?searchDateType="
+					+ searchDateType + "&searchBy=" + searchBy
+					+ "&searchQuery=" + searchQuery;
+		}
+	</script>
+</th:block>
+
+</html>

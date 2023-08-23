@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+	
+	<th:block layout:fragment="css">
+	<style>
+	.fieldError {
+			color : #bd2130;
+	</style>
+</th:block>	
+
+	<div layout:fragment="content">
+	
+	<div class="bg-light py-3">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 mb-0">
+					<a href="/">Home</a> <span class="mx-2 mb-0">/</span> <strong
+						class="text-black">회원가입</strong>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="site-section my-5">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<h2 class="h3 mb-3 text-black">회원가입</h2>
+					<div class="p-3 p-lg-5 border">
+						<form role="form" action="/member/new" method="post" th:object="${memberDto}">
+
+							<div class="form-group row">
+								<div class="col-md-12">
+									<label th:for="email" class="text-black "></label> 
+									<input type="email" class="form-control" placeholder="이메일" th:field="*{email}">
+									<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="fieldError">Incorrect Data</p>
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<div class="col-md-12">
+									<label th:for="password" class="text-black"></label> 
+									<input type="password" class="form-control" placeholder="비밀번호"  th:field="*{password}" >
+									<p th:if="${#fields.hasErrors('email')}" th:errors="*{password}" class="fieldError">Incorrect Data</p>
+								</div>
+							</div>
+							
+							<div class="form-group row">
+								<div class="col-md-12">
+									<label th:for="name" class="text-black"></label> 
+									<input type="text" class="form-control" placeholder="이름" th:field="*{name}" >
+									<p th:if="${#fields.hasErrors('email')}" th:errors="*{name}" class="fieldError">Incorrect Data</p>
+								</div>
+							</div>
+							
+							<div class="form-group row">
+								<div class="col-md-12">
+									<label th:for="birth" class="text-black"></label> 
+									<input type="text" class="form-control" placeholder="생년월일 8자리" th:field="*{birth}" >
+									<p th:if="${#fields.hasErrors('email')}" th:errors="*{birth}" class="fieldError">Incorrect Data</p>
+								</div>
+							</div>
+							
+							<div class="form-group row">
+								<div class="col-md-12">
+									<label th:for="phoneNumber" class="text-black"></label> 
+									<input type="text" class="form-control" placeholder="핸드폰 번호" id="phoneNumber" name="phoneNumber" >
+								    <input type="button" id="memberPhoneCheck" class="btn btn-primary mb-3 col-3" value="인증번호 전송">
+									<p th:if="${#fields.hasErrors('email')}" th:errors="*{phoneNumber}" class="fieldError">Incorrect Data</p>
+								</div>
+							</div>
+							
+							<div class="form-group row">
+								<div class="col-md-12">
+									<input type="text" class="form-control" placeholder="인증번호를 입력해주세요" id="phoneResponse" name="phoneResponse" >
+									<input type="button" id="p_Check" class="btn btn-primary mb-3 col-3" value="인증하기">
+								</div>
+							</div>
+
+							<div class="form-group ">
+								<div class=" row col-md-12 justify-content-center">
+									<button type="submit" class="btn btn-primary mb-3 col-3">회원가입</button>
+									<button type="submit" class="btn btn-primary mb-3 col-3">뒤로가기</button>
+								</div>
+							</div>
+							<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+	</div>
+	
+	<th:block layout:fragment="script">
+		
+	 	<script th:inline="javascript">
+		//회원 가입이 실패했을때
+		var errorMessage = [[${errorMessage}]];
+		
+		if(errorMessage != null) {
+			alert(errorMessage);
+		}
+		
+		//휴대폰번호 인증번호 보내기 버튼 클릭 이벤트
+		$('#memberPhoneCheck').click(function(){
+		
+			alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 해주십시오.");
+			
+			var phoneNumber = $('input[name="phoneNumber"]').val();
+			
+			$.ajax({
+				url : "/phoneCheck",
+				type : "GET",
+				data : "phoneNumber=" + phoneNumber,
+				dataType : "json",
+				success : function(data) {
+					const checkNum = data;
+					alert('checkNum:'+ checkNum);
+		            //인증하기 버튼 클릭 이벤트
+					$('#p_Check').click(function(){
+						var userNum = $('input[name="phoneResponse"]').val();	
+						alert('checkNum:'+ checkNum);
+						alert('userNum:'+ userNum);
+						if(checkNum == userNum){
+							alert('인증 성공하였습니다.');
+						}else {
+							alert('인증 실패하였습니다. 다시 입력해주세요.');
+						}
+					});
+		            
+				},
+				error : function() {
+					alert("에러")
+				}
+			});
+		});
+		
+		
+		
+	</script> 
+	
+	</th:block>
+	
+
+</html>
